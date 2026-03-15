@@ -28,9 +28,9 @@ class GreenCityNegativeRegistrationTest {
 
     @BeforeAll
     static void setUp() {
-//        ChromeOptions options = new ChromeOptions();
-        FirefoxOptions options = new FirefoxOptions();
-        options.addPreference("intl.accept_languages", "en-GB, en");
+        ChromeOptions options = new ChromeOptions();
+//        FirefoxOptions options = new FirefoxOptions();
+//        options.addPreference("intl.accept_languages", "en-GB, en");
         // Check if we are running in CI (GitHub Actions)
         if (System.getenv("GITHUB_ACTIONS") != null) {
             options.addArguments("--headless=new");
@@ -39,8 +39,8 @@ class GreenCityNegativeRegistrationTest {
             options.addArguments("--window-size=1920,1080");
         }
 
-//        driver = WebDriverManager.chromedriver().capabilities(options).create();
-        driver = WebDriverManager.firefoxdriver().capabilities(options).create();
+        driver = WebDriverManager.chromedriver().capabilities(options).create();
+//        driver = WebDriverManager.firefoxdriver().capabilities(options).create();
 
         driver.manage().window().maximize();
         // At this stage, we are not using complex waits, so we just maximize the window
@@ -98,6 +98,7 @@ class GreenCityNegativeRegistrationTest {
     // --- TESTS ---
 
 
+
     //andrii.koval@gmail..com - цікаво що ця пошта помилку не дає
 
     @ParameterizedTest(name = "Email: {0}, Name:{1}, Password:{2}, ConfirmPassword:{3}")
@@ -149,7 +150,6 @@ class GreenCityNegativeRegistrationTest {
 
         assertUsernameErrorVisible();
         clickSignUp();
-
     }
 
     @ParameterizedTest(name = "Email: {0}, Name:{1}, Password:{2}, ConfirmPassword:{3}")
@@ -178,7 +178,6 @@ class GreenCityNegativeRegistrationTest {
 
         assertPasswordWithSpaceAndNoSymbolErrorVisible();
         clickSignUp();
-
     }
 
     @ParameterizedTest(name = "Email: {0}, Name:{1}, Password:{2}")
@@ -270,10 +269,7 @@ class GreenCityNegativeRegistrationTest {
         System.out.println("The email isn't valid error message is visible");
     }
 
-
     private void assertUsernameErrorVisible() {
-        // Find the error element for the username (id may differ, check on the site)
-        // For example: driver.findElement(By.xpath("//input[@id='firstName']/following-sibling::div"))
         WebElement error = driver.findElement(By.id("firstname-err-msg"));
         assertTrue(error.isDisplayed(), "Email error message should be visible");
         String userNameEmptyErrorMsg = USERNAME_REQUIRED.toLowerCase();
